@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  node:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: on-failure
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=postgres
+      - DB_HOSTNAME=database
+      - DB_PORT=5432
+    ports:
+      - 3000:3000
+  database:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:
+    driver: local

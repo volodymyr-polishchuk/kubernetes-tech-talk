@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <button id="buy">Buy</button>
+
+  <script>
+    const button = document.querySelector('#buy');
+    button.addEventListener('click', evt => {
+        const http = new XMLHttpRequest();
+        button.disabled = true;
+        http.open('POST', `${document.location.origin}/buy`, true);
+
+        http.onreadystatechange = function() {
+            if(http.readyState === 4) {
+                button.disabled = false;
+            }
+        };
+        http.send();
+    })
+  </script>
+</body>
+</html>

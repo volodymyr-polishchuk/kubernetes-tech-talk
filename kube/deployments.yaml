@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-node
+  labels:
+    app: client-node
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: client-node
+  template:
+    metadata:
+      labels:
+        app: client-node
+    spec:
+      containers:
+        - name: node
+          ports:
+            - containerPort: 3000
+          image: 'volodymyrpo/client-node:0.0.3'
+          imagePullPolicy: Always
+          env:
+            - name: DB_PASSWORD
+              value: 'postgres'
+            - name: DB_HOSTNAME
+              value: 'metric-database.default.svc.cluster.local'
+            - name: DB_USERNAME
+              value: 'postgres'
+            - name: DB_NAME
+              value: 'postgres'
+            - name: DB_PORT
+              value: '5432'
+            - name: WAIT
+              value: '2000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node
+  labels:
+    app: client-node
+spec:
+  selector:
+    app: client-node
+  ports:
+    - port: 80
+      targetPort: 3000
+      name: http
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metric-database-init-script
+data:
+  init.sql: |-
+    CREATE TABLE metric (
+      id SERIAL NOT NULL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metric-database
+  labels:
+    app: metric-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metric-database
+  template:
+    metadata:
+      labels:
+        app: metric-database
+    spec:
+      containers:
+        - name: metric
+          image: postgres:9.6
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: init-script
+      volumes:
+        - name: init-script
+          configMap:
+            defaultMode: 420
+            name: metric-database-init-script
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metric-database
+  labels:
+    app: metric-database
+spec:
+  selector:
+    app: metric-database
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: tcp
