@@ -12,6 +12,7 @@ services:
       - DB_NAME=postgres
       - DB_HOSTNAME=database
       - DB_PORT=5432
+      - WAIT=1
     ports:
       - 3000:3000
   database:
@@ -25,6 +26,10 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+  grafana:
+    image: grafana/grafana:6.6.2
+    ports:
+      - 4000:3000
 
 volumes:
   db-data:

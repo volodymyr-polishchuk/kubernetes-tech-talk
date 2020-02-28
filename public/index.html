@@ -2,8 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
-</head>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title></head>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      background-color: #090914;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      color: white;
+      border: 4px solid white;
+      background-color: #090914;
+      height: 5rem;
+      width: 16rem;
+      font-size: 3rem;
+    }
+
+    button:hover {
+      color: #090914;
+      background-color: white;
+    }
+
+    button:disabled, button:hover:disabled {
+      color: dimgray;
+      border-color: dimgray;
+      background-color: #090914 !important;
+    }
+
+  </style>
 <body>
   <button id="buy">Buy</button>
 

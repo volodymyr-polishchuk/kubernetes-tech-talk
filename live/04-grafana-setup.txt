@@ -1,0 +1,7 @@
+metric-database.default.svc.cluster.local
+
+username: postgres
+password: postgres
+database: postgres
+
+ssl: disable

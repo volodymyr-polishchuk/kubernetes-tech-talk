@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type="text/css">
+    img {
+      height: 80vmin;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const image = document.createElement('img');
+        image.src = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${document.location.origin}`;
+        document.body.appendChild(image);
+    });
+  </script>
+</body>
+</html>

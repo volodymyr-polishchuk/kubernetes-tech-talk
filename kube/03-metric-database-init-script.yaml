@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metric-database-init-script
+data:
+  init.sql: |-
+    CREATE TABLE metric (
+      id SERIAL NOT NULL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )

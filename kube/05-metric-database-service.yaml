@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: metric-database
+  labels:
+    app: metric-database
+spec:
+  selector:
+    app: metric-database
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: tcp

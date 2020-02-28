@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-node
+  labels:
+    app: client-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-node
+  template:
+    metadata:
+      labels:
+        app: client-node
+    spec:
+      containers:
+        - name: node
+          ports:
+            - containerPort: 3000
+          image: volodymyrpo/client-node:0.0.8
+          imagePullPolicy: Always
+          env:
+            - name: DB_PASSWORD
+              value: 'postgres'
+            - name: DB_HOSTNAME
+              value: 'metric-database.default.svc.cluster.local'
+            - name: DB_USERNAME
+              value: 'postgres'
+            - name: DB_NAME
+              value: 'postgres'
+            - name: DB_PORT
+              value: '5432'
+            - name: WAIT
+              value: '2000'
