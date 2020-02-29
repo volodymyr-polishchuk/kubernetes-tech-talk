@@ -1,3 +1,5 @@
+#!/bin/bash
+
 kubectl apply -f kube/01-client-node-deployment.yaml
 
 kubectl apply -f kube/02-client-node-service.yaml

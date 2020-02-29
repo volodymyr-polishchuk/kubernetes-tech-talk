@@ -1,3 +1,5 @@
+#!/bin/bash
+
 kubectl get nodes
 
 kubectl get pod
@@ -8,4 +10,4 @@ kubectl get deployment
 
 kubectl version
 
-kubectl describe node <node name>
+kubectl describe node "<node name>"
