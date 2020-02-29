@@ -5,7 +5,7 @@ metadata:
   labels:
     app: client-node
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: client-node
@@ -18,7 +18,7 @@ spec:
         - name: node
           ports:
             - containerPort: 3000
-          image: volodymyrpo/client-node:0.0.8
+          image: volodymyrpo/client-node:0.0.21
           imagePullPolicy: Always
           env:
             - name: DB_PASSWORD
